@@ -103,7 +103,7 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     qmlRegisterType(MillerLogic, 'MillerLogic', 1, 0, 'Miller')
     engine = QQmlApplicationEngine()
-    qml_file = os.path.join(full_directory, "miller.qml")
+    qml_file = os.path.join(full_directory, "dash.qml")
     engine.load(str(qml_file))
 
     window = engine.rootObjects()[0]

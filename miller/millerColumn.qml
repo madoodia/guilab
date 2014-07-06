@@ -7,13 +7,13 @@ import MillerLogic 1.0
 
 import "../utils"
 
-ApplicationWindow {
+Item {
 	id: root
 	width: 605
 	height: 500
-	title: "Miller Column"
-	flags: Qt.FramelessWindowHint | Qt.Window
-	color: "transparent"
+	// title: "Miller Column"
+	// flags: Qt.FramelessWindowHint | Qt.Window
+	// color: "transparent"
 	// visible: false
 	property var oldObjects: []
 	property string baseHeader: 'Header'
@@ -96,7 +96,7 @@ ApplicationWindow {
 		dynamic.headerTxt = mainMiller.header
 		// root.width += 202
 		oldObjects[oldObjects.length] = dynamic
-		// mySize += 200
+		mySize += 200
 
 	}
 
@@ -105,7 +105,7 @@ ApplicationWindow {
 			print(oldObjects[i])
 			if(oldObjects[i].depthLevel >= depth){
 				oldObjects[i].destroy()
-				// mySize -= 200
+				mySize -= 200
 			}
 		}
 	}
