@@ -1,4 +1,4 @@
 guilab
 ======
 
-GUI creating with QML
+Creating GUI with QML
