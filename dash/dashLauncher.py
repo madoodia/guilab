@@ -97,7 +97,7 @@ class MillerLogic(QObject):
 
 
 if __name__ == '__main__':
-    path = os.path.expanduser("E:\Madoodia\_Abstract_Factory")
+    path = os.path.abspath("../root")
     MillerLogic._path = path
     full_directory = os.path.dirname(os.path.abspath(__file__))
     app = QApplication(sys.argv)
