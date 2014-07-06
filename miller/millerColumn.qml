@@ -28,7 +28,9 @@ Item {
 		// color: "white"
 		Flickable {
 			id: flick
-			anchors.fill: parent
+			width: parent.width-1
+			height: parent.height-1
+			anchors.centerIn: parent
 		    contentWidth: mySize
 		    contentHeight: 1000
 		    clip: true
@@ -44,17 +46,17 @@ Item {
 		    // }
 			RowLayout {
 				id: mainRow
-				height: parent.height
-				Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+				// height: parent.height
+				// Layout.alignment: Qt.AlignLeft | Qt.AlignTop
 				spacing: 0
 
 				ColumnLayout {
-					Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+					// Layout.alignment: Qt.AlignLeft | Qt.AlignTop
 					spacing: 0
 					RowLayout {
 						id: baseRow
-						Layout.alignment: Qt.AlignLeft
-						spacing: 0
+						// Layout.alignment: Qt.AlignLeft
+						spacing: 1
 						View {
 							id: lv1
 							depthLevel: 0
@@ -63,15 +65,12 @@ Item {
 					}
 				}
 				ColumnLayout {
-					Layout.alignment: Qt.AlignTop | Qt.AlignLeft
+					Layout.alignment: Qt.AlignLeft | Qt.AlignTop
 					spacing: 0
-					RowLayout {
-						Layout.alignment: Qt.AlignLeft
-						OuterBevelFrame {
-						    width: 50
-						    height: flick.height
-						}
-					}	
+					OuterBevelFrame {
+					    width: 50
+					    height: flick.height
+					}
 				}
 			}
 		}

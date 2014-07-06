@@ -106,13 +106,15 @@ ApplicationWindow {
 				}
 				RowLayout {
 					id: page
-					Layout.maximumHeight: parent.height
-					Layout.alignment: Qt.AlignHCenter
-
+					// width : parent.width-1
+					// height : parent.height-1
+					// Layout.maximumHeight: parent.height
+					// Layout.alignment: Qt.AlignHCenter
+					spacing: 0
 					MillerColumn {
 						id: m
 						width: page.width
-						height: page.height
+						height: page.height-1
 					}
 				}
 			}

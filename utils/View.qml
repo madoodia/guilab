@@ -24,7 +24,7 @@ Item {
 		spacing: 0
 		Layout.alignment: Qt.AlignHCenter
 		RowLayout {
-			Layout.alignment: Qt.AlignHCenter
+			// Layout.alignment: Qt.AlignHCenter
 			width: parent.width
 			height: 20
 			MillerHeader {
