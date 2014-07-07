@@ -80,19 +80,10 @@ Item {
 				destroyViews(Number(activeList_depth[index]))
 
 				// 3: Create New Blocks
-				createView(300 * (1 + Number(activeList_depth[index])),Number(activeList_depth[index]))
+				createView(100 * (1 + Number(activeList_depth[index])),Number(activeList_depth[index]))
 
 				// print(textWidth)
 			}
-		}
-	}
-	Component.onCompleted: {
-		findMaxWidth()
-	}
-
-	function findMaxWidth(){
-		if(textWidth > listViewRoot.maxTextWidth){
-			listViewRoot.maxTextWidth = textWidth
 		}
 	}
 }

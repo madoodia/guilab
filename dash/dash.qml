@@ -10,7 +10,7 @@ import "../miller"
 
 ApplicationWindow {
 	id: root
-	width: 700
+	width: 400
 	height: 400
 	title: "Miller Column"
 	flags: Qt.FramelessWindowHint | Qt.Window
@@ -30,18 +30,23 @@ ApplicationWindow {
 
 		OuterBevelFrame {
 			id: base
-			width: parent.width-10
-			height: parent.height-10
+			width: parent.width
+			height: parent.height
+			// Rectangle {
+			//     width: parent.width
+			//     height: parent.height
+			//     color: "green"
+			// }
 
 			ColumnLayout {
 				id: ui
 				width: parent.width
 				height: parent.height
-				spacing: 5
+				spacing: 1
 				Layout.alignment: Qt.AlignHCenter | Qt.AlignHCenter
 				RowLayout {
 					id: header
-					Layout.maximumHeight: 20
+					Layout.maximumHeight: 30
 					Layout.maximumWidth: parent.width - 5
 					MouseArea {
 						anchors.fill: header
@@ -100,16 +105,13 @@ ApplicationWindow {
 									onClicked: Qt.quit()
 								}
 							}
-
 						}
 					}
 				}
 				RowLayout {
 					id: page
-					// width : parent.width-1
-					// height : parent.height-1
-					// Layout.maximumHeight: parent.height
-					// Layout.alignment: Qt.AlignHCenter
+					Layout.maximumHeight: parent.height-30
+					Layout.alignment: Qt.AlignHCenter | Qt.AlignHCenter
 					spacing: 0
 					MillerColumn {
 						id: m

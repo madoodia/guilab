@@ -86,12 +86,12 @@ class MillerLogic(QObject):
         self._header = os.path.basename(path)
         self._contents = []
 
-        for basename in pifou.com.Iterator(path):
+        for path in pifou.com.Iterator(path):
             bc = BaseContent()
-            fullpath = os.path.join(path, basename)
-            if os.path.isdir(fullpath):
+            basename = os.path.basename(path)
+            if os.path.isdir(path):
                 bc.content_name = basename
-                bc.content_path = fullpath
+                bc.content_path = path
                 bc.depth = str(depth)
                 self._contents.append(bc)
 

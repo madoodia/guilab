@@ -5,7 +5,7 @@ import "../contents"
 Item {
 	id: header
 	property alias label: headerLabel.text
-	width: 200
+	width: 100
 	height: 25
 
 	OuterBevelFrame {
@@ -21,17 +21,4 @@ Item {
 			color: '#fefefe'
 		}
 	}
-	
-	Component.onCompleted: {
-		findMaxHeaderWidth()
-	}
-	function findMaxHeaderWidth(){
-		if(headerLabel.width < listViewRoot.maxTextWidth){
-			width = listViewRoot.maxTextWidth + 30
-		}
-		else{
-			width = headerLabel.width
-		}
-	}
-
 }

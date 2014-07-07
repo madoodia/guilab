@@ -9,7 +9,7 @@ import "../utils"
 
 Item {
 	id: root
-	width: 605
+	width: 600
 	height: 500
 	// title: "Miller Column"
 	// flags: Qt.FramelessWindowHint | Qt.Window
@@ -17,7 +17,7 @@ Item {
 	// visible: false
 	property var oldObjects: []
 	property string baseHeader: 'Header'
-	property real mySize: 1000
+	property real mySize: 100
 
 	InnerBevelFrame {
 		id: mainBG
@@ -32,7 +32,6 @@ Item {
 			height: parent.height-1
 			anchors.centerIn: parent
 		    contentWidth: mySize
-		    contentHeight: 1000
 		    clip: true
 		    // boundsBehavior: Flickable.DragOverBounds
 		    flickableDirection: Flickable.HorizontalFlick
@@ -48,7 +47,7 @@ Item {
 				id: mainRow
 				// height: parent.height
 				// Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-				spacing: 0
+				spacing: 1
 
 				ColumnLayout {
 					// Layout.alignment: Qt.AlignLeft | Qt.AlignTop
@@ -56,7 +55,7 @@ Item {
 					RowLayout {
 						id: baseRow
 						// Layout.alignment: Qt.AlignLeft
-						spacing: 1
+						spacing: 0
 						View {
 							id: lv1
 							depthLevel: 0
@@ -64,14 +63,14 @@ Item {
 						}
 					}
 				}
-				ColumnLayout {
-					Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-					spacing: 0
-					OuterBevelFrame {
-					    width: 50
-					    height: flick.height
-					}
-				}
+				// ColumnLayout {
+				// 	Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+				// 	spacing: 0
+				// 	OuterBevelFrame {
+				// 	    width: 50
+				// 	    height: flick.height
+				// 	}
+				// }
 			}
 		}
 	}
@@ -95,7 +94,7 @@ Item {
 		dynamic.headerTxt = mainMiller.header
 		// root.width += 202
 		oldObjects[oldObjects.length] = dynamic
-		mySize += 200
+		mySize += 100
 
 	}
 
@@ -104,7 +103,7 @@ Item {
 			print(oldObjects[i])
 			if(oldObjects[i].depthLevel >= depth){
 				oldObjects[i].destroy()
-				mySize -= 200
+				mySize -= 100
 			}
 		}
 	}
