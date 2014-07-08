@@ -68,19 +68,20 @@ Item {
 				buttonColor = "#537f3f"
 			}
 			onClicked: {
+				mainMiller.printMe(modelData)
 				// remove_item(modelData)
 				// listView.model = activeList
 				// print(mainList.contents[index].content_path)
 				// print(activeList_name[index])
 				
 				// 1: Fill Contents
-				mainList.fill_contents(activeList_path[index], activeList_depth[index])
+				// mainList.fill_contents(activeList_path[index], activeList_depth[index])
 				
-				// 2: Destroy Items
-				destroyViews(Number(activeList_depth[index]))
+				// // 2: Destroy Items
+				// destroyViews(Number(activeList_depth[index]))
 
-				// 3: Create New Blocks
-				createView(150 * (1 + Number(activeList_depth[index])),Number(activeList_depth[index]))
+				// // 3: Create New Blocks
+				// createView(150 * (1 + Number(activeList_depth[index])),Number(activeList_depth[index]))
 
 				// print(textWidth)
 			}

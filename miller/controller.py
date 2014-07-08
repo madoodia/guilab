@@ -155,6 +155,10 @@ class Miller(QtCore.QObject):
         index = model.root_item.index
         self.add_list(index)
 
+    @QtCore.pyqtSlot(str)
+    def printMe(self, msg):
+        print msg
+
 
 def main(qml_file="millerLauncher.qml", path=""):
     List._root = os.path.abspath(path)
