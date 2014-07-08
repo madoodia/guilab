@@ -133,7 +133,7 @@ class Miller(QtCore.QObject):
             _list = List()
             # self._header = label
             if self.model.data(index, 'group'):
-                _list.name = label
+                _list._header = label
                 _list.index = index
                 self._lists.append(_list)
 

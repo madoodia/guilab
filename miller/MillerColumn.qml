@@ -117,7 +117,7 @@ Item {
 		var _list = []
 		for(var i=0;i < mainMiller.lists.length;i++){
 			_list[i] = mainMiller.lists[i].header
-			activeMiller_index[i] = mainMiller.lists[i].index
+			activeMiller_header[i] = mainMiller.lists[i].index
 			print(_list[i])
 		}
 		return _list

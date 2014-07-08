@@ -17,11 +17,6 @@ Item {
 	
 	width: 150
 	height: 500
-	Rectangle {
-		width: parent.width
-		height: parent.height
-	    color: "green"
-	}
 
 	ColumnLayout {
 		id: ui
@@ -42,6 +37,12 @@ Item {
 		}
 		RowLayout {
 			Layout.alignment: Qt.AlignHCenter
+			Rectangle {
+				width: parent.width
+				height: parent.height
+			    color: "green"
+			    border.color: "gray"
+			}
 			ListView {
 				id: listView
 				anchors.fill: parent
