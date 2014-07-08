@@ -4,6 +4,7 @@ import QtQuick.Window 2.1
 import QtQuick.Layouts 1.1
 
 import List 1.0
+import Miller 1.0
 
 import "../utils"
 
@@ -11,6 +12,9 @@ Item {
 	id: root
 	width: 600
 	height: 500
+
+	property var activeMiller_name: []
+	property var activeMiller_index: []
 	// title: "Miller Column"
 	// flags: Qt.FramelessWindowHint | Qt.Window
 	// color: "transparent"
@@ -18,6 +22,7 @@ Item {
 	property var oldObjects: []
 	property string baseHeader: 'Header'
 	property real mySize: 150
+
 
 	InnerBevelFrame {
 		id: mainBG
@@ -56,12 +61,27 @@ Item {
 						id: baseRow
 						// Layout.alignment: Qt.AlignLeft
 						spacing: 0
-						View {
-							id: lv1
-							depthLevel: 0
-							headerTxt: baseHeader
-							light: 1
+
+						ListView {
+							id: listView
+							anchors.fill: parent
+							clip: true
+
+							Component.onCompleted: {
+								activeMiller_name = createMiller()
+							}
+
+							model: activeMiller_name
+							
+							delegate: View {}
+							spacing: 0
 						}
+						// View {
+						// 	id: lv1
+						// 	depthLevel: 0
+						// 	headerTxt: baseHeader
+						// 	light: 1
+						// }
 					}
 				}
 				// ColumnLayout {
@@ -84,6 +104,23 @@ Item {
 			baseHeader = header
 		}
 	}
+
+	Miller {
+		id: mainMiller
+		Component.onCompleted: {
+			init()
+		}
+	}
+
+	function createMiller() {
+		var _list = []
+		for(var i=0;i < mainMiller.lists.length;i++){
+			_list[i] = mainMiller.lists[i].name
+			activeMiller_index[i] = mainMiller.lists[i].index
+		}
+		return _list
+	}
+
 
 	function createView(xPos, depth){
 		var component

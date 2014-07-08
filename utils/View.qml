@@ -6,7 +6,7 @@ Item {
 	id: listViewRoot
 
 	property var activeList_name: []
-	property var activeList_path: []
+	property var activeList_index: []
 	// property var activeList_depth: []
 
 	property int depthLevel: 0
@@ -58,7 +58,7 @@ Item {
 		var _list = []
 		for(var i=0;i < mainList.delegates.length;i++){
 			_list[i] = mainList.delegates[i].name
-			activeList_path[i] = mainList.delegates[i].index
+			activeList_index[i] = mainList.delegates[i].index
 		}
 		return _list
 	}
