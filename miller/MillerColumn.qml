@@ -79,7 +79,7 @@ Item {
 		id: mainList
 
 		Component.onCompleted: {
-			call_populate()
+			init()
 			baseHeader = header
 		}
 	}

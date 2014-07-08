@@ -48,12 +48,12 @@ class BaseDelegate(QObject):
 
 class List(QObject):
 
-    # _path = ''
-    # _delegates_list = []
-
-    def __init__(self, parent=None):
+    def __init__(self, index=None, parent=None):
         super(List, self).__init__(parent)
+        self.index = index
         self.model = None
+
+        # Private members
         self._delegates = []
         self._header = ''
 
@@ -69,13 +69,9 @@ class List(QObject):
     def header(self, header):
         self._header = header
 
-    @pyqtSlot()
-    def call_populate(self):
-        self.populate()
-
     def populate(self, index=None):
         self._delegates = []
-        index = self.model.root_item.index
+        index = index or self.index
 
         for model_item in self.model.children(index=index):
             index = model_item.index
@@ -83,24 +79,37 @@ class List(QObject):
 
             self._header = label
             bc = BaseDelegate()
-            if model.data(index, 'group'):
+            if self.model.data(index, 'group'):
                 bc.name = label
                 bc.index = index
                 self._delegates.append(bc)
 
     def set_model(self, model):
         self.model = model
-        model.model_reset.connect(self.populate)
+        model.model_reset.connect(self.model_reset_event)
+
+    def model_reset_event(self):
+        if not self.index:
+            self.index = self.model.root_item.index
+        self.populate()
+
+    @pyqtSlot()
+    def init(self):
+        root = os.path.abspath("../fixtures/root_withcquery")
+        model = dash.model.Model()
+        self.set_model(model)
+
+        model.setup(root)
 
 
 if __name__ == '__main__':
-    listview = List()
-    model = dash.model.Model()
-    listview.set_model(model)
-    model.setup(r'E:\Madoodia\_GitHub\guilab\fixtures\root_withcquery')
+    # listview = List()
+    # model = dash.model.Model()
+    # listview.set_model(model)
+    # model.setup(os.path.abspath("../fixtures/root_withcquery"))
 
-    # path = os.path.expanduser("E:\Madoodia\_Abstract_Factory")
-    # List._path = path
+    path = os.path.expanduser("E:\Madoodia\_Abstract_Factory")
+    List._path = path
     full_directory = os.path.dirname(os.path.abspath(__file__))
     app = QApplication(sys.argv)
     qmlRegisterType(List, 'List', 1, 0, 'List')
