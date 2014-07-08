@@ -48,11 +48,12 @@ class BaseDelegate(QObject):
 
 class List(QObject):
 
-    _path = ''
-    _delegates_list = []
+    # _path = ''
+    # _delegates_list = []
 
     def __init__(self, parent=None):
         super(List, self).__init__(parent)
+        self.model = None
         self._delegates = []
         self._header = ''
 
@@ -68,27 +69,12 @@ class List(QObject):
     def header(self, header):
         self._header = header
 
-    @pyqtSlot(str, int)
-    def fill_delegates(self, path, depth):
-
-        if depth == -1:
-            path = self._path
-
-        # print path , ' : ', depth+1
-        self.update_list(depth)
-        self.get_children(path, depth+1)
-        self._delegates_list.append(self._delegates)
-
-        # print self._delegates_list
-
-    # def update_list(self, depth):
-    #     self._delegates_list[depth+1:] = []
+    @pyqtSlot()
+    def call_populate(self):
+        self.populate()
 
     def populate(self, index=None):
         self._delegates = []
-        self.model = dash.model.Model()
-        self.model.setup(r'E:\Madoodia\_GitHub\guilab\fixtures\root_withcquery')
-
         index = self.model.root_item.index
 
         for model_item in self.model.children(index=index):
@@ -102,13 +88,22 @@ class List(QObject):
                 bc.index = index
                 self._delegates.append(bc)
 
+    def set_model(self, model):
+        self.model = model
+        model.model_reset.connect(self.populate)
+
 
 if __name__ == '__main__':
-    path = os.path.expanduser("E:\Madoodia\_Abstract_Factory")
-    List._path = path
+    listview = List()
+    model = dash.model.Model()
+    listview.set_model(model)
+    model.setup(r'E:\Madoodia\_GitHub\guilab\fixtures\root_withcquery')
+
+    # path = os.path.expanduser("E:\Madoodia\_Abstract_Factory")
+    # List._path = path
     full_directory = os.path.dirname(os.path.abspath(__file__))
     app = QApplication(sys.argv)
-    qmlRegisterType(List, 'List', 1, 0, 'Miller')
+    qmlRegisterType(List, 'List', 1, 0, 'List')
     engine = QQmlApplicationEngine()
     qml_file = os.path.join(full_directory, "miller.qml")
     engine.load(str(qml_file))

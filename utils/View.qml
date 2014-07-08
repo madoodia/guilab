@@ -7,12 +7,12 @@ Item {
 
 	property var activeList_name: []
 	property var activeList_path: []
-	property var activeList_depth: []
+	// property var activeList_depth: []
 
 	property int depthLevel: 0
 
 	property var headerTxt: 'Header'
-	property int maxTextWidth: 0
+	// property int maxTextWidth: 0
 	
 	width: 150
 	height: 500
@@ -54,10 +54,9 @@ Item {
 
 	function createList() {
 		var _list = []
-		for(var i=0;i < mainMiller.contents.length;i++){
-			_list[i] = mainMiller.contents[i].content_name
-			activeList_path[i] = mainMiller.contents[i].content_path
-			activeList_depth[i] = mainMiller.contents[i].depth
+		for(var i=0;i < mainList.delegates.length;i++){
+			_list[i] = mainList.delegates[i].name
+			activeList_path[i] = mainList.delegates[i].index
 		}
 		return _list
 	}

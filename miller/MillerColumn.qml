@@ -3,7 +3,7 @@ import QtQuick.Controls 1.0
 import QtQuick.Window 2.1
 import QtQuick.Layouts 1.1
 
-import MillerLogic 1.0
+import List 1.0
 
 import "../utils"
 
@@ -75,11 +75,11 @@ Item {
 		}
 	}
 
-	Miller {
-		id: mainMiller
+	List {
+		id: mainList
 
 		Component.onCompleted: {
-			fill_contents('', -1)
+			call_populate()
 			baseHeader = header
 		}
 	}
@@ -91,7 +91,7 @@ Item {
 		dynamic = component.createObject(baseRow)
 		dynamic.x = xPos
 		dynamic.depthLevel = depth
-		dynamic.headerTxt = mainMiller.header
+		dynamic.headerTxt = mainList.header
 		// root.width += 202
 		oldObjects[oldObjects.length] = dynamic
 		mySize += 150
