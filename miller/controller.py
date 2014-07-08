@@ -122,20 +122,16 @@ class Miller(QtCore.QObject):
     def lists(self):
         return QtQml.QQmlListProperty(List, self, self._lists)
 
-    def populate(self, index=None):
+    def add_list(self, index=None):
         self._lists = []
         index = index or self.index
+        label = self.model.data(index, 'display')
 
-        for model_item in self.model.children(index=index):
-            index = model_item.index
-            label = self.model.data(index, 'display')
-
-            _list = List()
-            # self._header = label
-            if self.model.data(index, 'group'):
-                _list._header = label
-                _list.index = index
-                self._lists.append(_list)
+        _list = List(index)
+        _list.set_model(self.model)
+        _list.populate()
+        _list._header = label
+        self._lists.append(_list)
 
     def set_model(self, model):
         self.model = model
@@ -144,7 +140,7 @@ class Miller(QtCore.QObject):
     def model_reset_event(self):
         if not self.index:
             self.index = self.model.root_item.index
-        self.populate()
+        self.add_list()
 
     @QtCore.pyqtSlot()
     def init(self):
@@ -157,7 +153,7 @@ class Miller(QtCore.QObject):
         self.set_model(model)
 
         index = model.root_item.index
-        self.populate(index)
+        self.add_list(index)
 
 
 def main(qml_file="millerLauncher.qml", path=""):

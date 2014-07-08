@@ -30,19 +30,13 @@ Item {
 			height: 20
 			MillerHeader {
 				id: ourHeader
-				label: headerTxt
+				label: modelData
 				enableLight: light
 				// width: parent.width
 			}		
 		}
 		RowLayout {
 			Layout.alignment: Qt.AlignHCenter
-			Rectangle {
-				width: parent.width
-				height: parent.height
-			    color: "green"
-			    border.color: "gray"
-			}
 			ListView {
 				id: listView
 				anchors.fill: parent
@@ -57,14 +51,20 @@ Item {
 				delegate: Delegate {}
 				spacing: 0
 			}
+			Rectangle {
+				width: parent.width
+				height: parent.height
+			    color: "green"
+			    border.color: "gray"
+			}
 		}
 	}
 
 	function createList() {
 		var _list = []
-		for(var i=0;i < mainList.delegates.length;i++){
-			_list[i] = mainList.delegates[i].name
-			activeList_index[i] = mainList.delegates[i].index
+		for(var i=0;i < mainMiller.lists.length;i++){
+			_list[i] = mainMiller.lists[i].name
+			activeList_index[i] = mainMiller.lists[i].index
 		}
 		return _list
 	}
