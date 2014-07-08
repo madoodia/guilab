@@ -48,6 +48,8 @@ class BaseDelegate(QObject):
 
 class List(QObject):
 
+    _root = ''
+
     def __init__(self, index=None, parent=None):
         super(List, self).__init__(parent)
         self.index = index
@@ -77,12 +79,13 @@ class List(QObject):
             index = model_item.index
             label = self.model.data(index, 'display')
 
-            self._header = label
             bc = BaseDelegate()
+            # self._header = label
             if self.model.data(index, 'group'):
                 bc.name = label
                 bc.index = index
                 self._delegates.append(bc)
+
 
     def set_model(self, model):
         self.model = model
@@ -95,28 +98,30 @@ class List(QObject):
 
     @pyqtSlot()
     def init(self):
-        root = os.path.abspath("../fixtures/root_withcquery")
+        # root = os.path.abspath("E:\Madoodia\_Abstract_Factory")
         model = dash.model.Model()
         self.set_model(model)
+        
+        basename = os.path.basename(List._root)
+        self._header = basename
 
-        model.setup(root)
+        model.setup(List._root)
 
+def main(qml_file="millerLauncher.qml", path = ""):
 
-if __name__ == '__main__':
-    # listview = List()
-    # model = dash.model.Model()
-    # listview.set_model(model)
-    # model.setup(os.path.abspath("../fixtures/root_withcquery"))
+    List._root = os.path.abspath(path)
 
-    path = os.path.expanduser("E:\Madoodia\_Abstract_Factory")
-    List._path = path
+    # Show QML Window
     full_directory = os.path.dirname(os.path.abspath(__file__))
     app = QApplication(sys.argv)
     qmlRegisterType(List, 'List', 1, 0, 'List')
     engine = QQmlApplicationEngine()
-    qml_file = os.path.join(full_directory, "miller.qml")
+    qml_file = os.path.join(full_directory, qml_file)
     engine.load(str(qml_file))
 
     window = engine.rootObjects()[0]
     window.show()
     sys.exit(app.exec_())
+
+if __name__ == '__main__':
+    main(path='../fixtures/root_withcquery')

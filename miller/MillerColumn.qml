@@ -60,6 +60,7 @@ Item {
 							id: lv1
 							depthLevel: 0
 							headerTxt: baseHeader
+							light: 1
 						}
 					}
 				}
@@ -77,9 +78,9 @@ Item {
 
 	List {
 		id: mainList
-
 		Component.onCompleted: {
 			init()
+			// print(mainList.header)
 			baseHeader = header
 		}
 	}

@@ -12,6 +12,7 @@ Item {
 	property int depthLevel: 0
 
 	property var headerTxt: 'Header'
+	property int light: 0
 	// property int maxTextWidth: 0
 	
 	width: 150
@@ -30,6 +31,7 @@ Item {
 			MillerHeader {
 				id: ourHeader
 				label: headerTxt
+				enableLight: light
 				// width: parent.width
 			}		
 		}

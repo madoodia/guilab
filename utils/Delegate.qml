@@ -70,11 +70,11 @@ Item {
 			onClicked: {
 				// remove_item(modelData)
 				// listView.model = activeList
-				// print(mainMiller.contents[index].content_path)
+				// print(mainList.contents[index].content_path)
 				// print(activeList_name[index])
 				
 				// 1: Fill Contents
-				mainMiller.fill_contents(activeList_path[index], activeList_depth[index])
+				mainList.fill_contents(activeList_path[index], activeList_depth[index])
 				
 				// 2: Destroy Items
 				destroyViews(Number(activeList_depth[index]))
