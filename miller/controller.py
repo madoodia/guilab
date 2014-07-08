@@ -40,7 +40,7 @@ class Delegate(QtCore.QObject):
     #     self._depth = depth
 
     def __repr__(self):
-        return self._delegate_name
+        return self._name
 
 
 class List(QtCore.QObject):
@@ -104,6 +104,9 @@ class List(QtCore.QObject):
         index = model.root_item.index
         self.populate(index)
 
+    def __repr__(self):
+        return self._header
+
 
 class Miller(QtCore.QObject):
 
@@ -147,8 +150,8 @@ class Miller(QtCore.QObject):
     def init(self):
         # root = os.path.abspath("E:\Madoodia\_Abstract_Factory")
         model = dash.model.Model()
-        basename = os.path.basename(List._root)
-        self._header = basename
+        # basename = os.path.basename(List._root)
+        # self._header = basename
 
         model.setup(List._root)
         self.set_model(model)

@@ -13,7 +13,7 @@ Item {
 	width: 600
 	height: 500
 
-	property var activeMiller_name: []
+	property var activeMiller_header: []
 	property var activeMiller_index: []
 	// title: "Miller Column"
 	// flags: Qt.FramelessWindowHint | Qt.Window
@@ -66,12 +66,13 @@ Item {
 							id: listView
 							anchors.fill: parent
 							clip: true
+							orientation: ListView.Horizontal
 
 							Component.onCompleted: {
-								activeMiller_name = createMiller()
+								activeMiller_header = createMiller()
 							}
 
-							model: activeMiller_name
+							model: activeMiller_header
 							
 							delegate: View {}
 							spacing: 0
@@ -115,8 +116,9 @@ Item {
 	function createMiller() {
 		var _list = []
 		for(var i=0;i < mainMiller.lists.length;i++){
-			_list[i] = mainMiller.lists[i].name
+			_list[i] = mainMiller.lists[i].header
 			activeMiller_index[i] = mainMiller.lists[i].index
+			print(_list[i])
 		}
 		return _list
 	}

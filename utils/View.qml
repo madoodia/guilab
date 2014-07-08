@@ -17,6 +17,11 @@ Item {
 	
 	width: 150
 	height: 500
+	Rectangle {
+		width: parent.width
+		height: parent.height
+	    color: "green"
+	}
 
 	ColumnLayout {
 		id: ui
