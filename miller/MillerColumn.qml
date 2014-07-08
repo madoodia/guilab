@@ -17,7 +17,7 @@ Item {
 	// visible: false
 	property var oldObjects: []
 	property string baseHeader: 'Header'
-	property real mySize: 100
+	property real mySize: 150
 
 	InnerBevelFrame {
 		id: mainBG
@@ -94,7 +94,7 @@ Item {
 		dynamic.headerTxt = mainMiller.header
 		// root.width += 202
 		oldObjects[oldObjects.length] = dynamic
-		mySize += 100
+		mySize += 150
 
 	}
 
@@ -103,7 +103,7 @@ Item {
 			print(oldObjects[i])
 			if(oldObjects[i].depthLevel >= depth){
 				oldObjects[i].destroy()
-				mySize -= 100
+				mySize -= 150
 			}
 		}
 	}

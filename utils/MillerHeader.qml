@@ -5,7 +5,7 @@ import "../contents"
 Item {
 	id: header
 	property alias label: headerLabel.text
-	width: 100
+	width: 150
 	height: 25
 
 	OuterBevelFrame {

@@ -14,7 +14,7 @@ Item {
 	property var headerTxt: 'Header'
 	property int maxTextWidth: 0
 	
-	width: 100
+	width: 150
 	height: 500
 
 	ColumnLayout {

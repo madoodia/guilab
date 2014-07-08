@@ -80,7 +80,7 @@ Item {
 				destroyViews(Number(activeList_depth[index]))
 
 				// 3: Create New Blocks
-				createView(100 * (1 + Number(activeList_depth[index])),Number(activeList_depth[index]))
+				createView(150 * (1 + Number(activeList_depth[index])),Number(activeList_depth[index]))
 
 				// print(textWidth)
 			}

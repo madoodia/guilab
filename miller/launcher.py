@@ -8,55 +8,57 @@ from PyQt5.QtQml import qmlRegisterType, QQmlListProperty, QQmlApplicationEngine
 import pifou.com
 
 
-class BaseContent(QObject):
+import dash.model
+
+class BaseDelegate(QObject):
 
     def __init__(self, parent=None):
-        super(BaseContent, self).__init__(parent)
-        self._content_path = ''
-        self._content_name = ''
-        self._depth = 0
+        super(BaseDelegate, self).__init__(parent)
+        self._index = ''
+        self._name = ''
+        # self._depth = 0
 
     @pyqtProperty(str)
-    def content_path(self):
-        return self._content_path
+    def index(self):
+        return self._index
 
-    @content_path.setter
-    def content_path(self, content_path):
-        self._content_path = content_path
-
-    @pyqtProperty(str)
-    def content_name(self):
-        return self._content_name
-
-    @content_name.setter
-    def content_name(self, content_name):
-        self._content_name = content_name
+    @index.setter
+    def index(self, index):
+        self._index = index
 
     @pyqtProperty(str)
-    def depth(self):
-        return self._depth
+    def name(self):
+        return self._name
 
-    @depth.setter
-    def depth(self, depth):
-        self._depth = depth
+    @name.setter
+    def name(self, name):
+        self._name = name
+
+    # @pyqtProperty(str)
+    # def depth(self):
+    #     return self._depth
+
+    # @depth.setter
+    # def depth(self, depth):
+    #     self._depth = depth
 
     def __repr__(self):
-        return self._content_name
+        return self._delegate_name
 
 
-class MillerLogic(QObject):
+class List(QObject):
 
     _path = ''
-    _contents_list = []
+    _delegates_list = []
 
     def __init__(self, parent=None):
-        super(MillerLogic, self).__init__(parent)
-        self._contents = []
+        super(List, self).__init__(parent)
+        self._delegates = []
         self._header = ''
 
     @pyqtProperty(QQmlListProperty)
-    def contents(self):
-        return QQmlListProperty(BaseContent, self, self._contents)
+    def delegates(self):
+        return QQmlListProperty(BaseDelegate, self, self._delegates)
 
     @pyqtProperty(str)
     def header(self):
@@ -67,7 +69,7 @@ class MillerLogic(QObject):
         self._header = header
 
     @pyqtSlot(str, int)
-    def fill_contents(self, path, depth):
+    def fill_delegates(self, path, depth):
 
         if depth == -1:
             path = self._path
@@ -75,33 +77,38 @@ class MillerLogic(QObject):
         # print path , ' : ', depth+1
         self.update_list(depth)
         self.get_children(path, depth+1)
-        self._contents_list.append(self._contents)
+        self._delegates_list.append(self._delegates)
 
-        # print self._contents_list
+        # print self._delegates_list
 
-    def update_list(self, depth):
-        self._contents_list[depth+1:] = []
+    # def update_list(self, depth):
+    #     self._delegates_list[depth+1:] = []
 
-    def get_children(self, path, depth):
-        self._header = os.path.basename(path)
-        self._contents = []
+    def populate(self, index=None):
+        self._delegates = []
+        self.model = dash.model.Model()
+        self.model.setup(r'E:\Madoodia\_GitHub\guilab\fixtures\root_withcquery')
 
-        for path in pifou.com.Iterator(path):
-            bc = BaseContent()
-            basename = os.path.basename(path)
-            if os.path.isdir(path):
-                bc.content_name = basename
-                bc.content_path = path
-                bc.depth = str(depth)
-                self._contents.append(bc)
+        index = self.model.root_item.index
+
+        for model_item in self.model.children(index=index):
+            index = model_item.index
+            label = self.model.data(index, 'display')
+
+            self._header = label
+            bc = BaseDelegate()
+            if model.data(index, 'group'):
+                bc.name = label
+                bc.index = index
+                self._delegates.append(bc)
 
 
 if __name__ == '__main__':
     path = os.path.expanduser("E:\Madoodia\_Abstract_Factory")
-    MillerLogic._path = path
+    List._path = path
     full_directory = os.path.dirname(os.path.abspath(__file__))
     app = QApplication(sys.argv)
-    qmlRegisterType(MillerLogic, 'MillerLogic', 1, 0, 'Miller')
+    qmlRegisterType(List, 'List', 1, 0, 'Miller')
     engine = QQmlApplicationEngine()
     qml_file = os.path.join(full_directory, "miller.qml")
     engine.load(str(qml_file))
