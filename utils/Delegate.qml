@@ -68,7 +68,7 @@ Item {
 				buttonColor = "#537f3f"
 			}
 			onClicked: {
-				mainMiller.printMe(modelData)
+				mainMiller.printMe(activeList_index[index])
 				// remove_item(modelData)
 				// listView.model = activeList
 				// print(mainList.contents[index].content_path)
