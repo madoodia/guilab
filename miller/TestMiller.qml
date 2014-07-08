@@ -10,6 +10,11 @@ Item {
 	height: 500
 	property var activeMiller_header: []
 	property var activeMiller_index: []
+	Rectangle {
+	    width: parent.width
+	    height: parent.height
+	    color: "gray"
+	}
 
 	ListView {
 		id: listView
@@ -39,7 +44,7 @@ Item {
 		for(var i=0;i < mainMiller.lists.length;i++){
 			_list[i] = mainMiller.lists[i].header
 			activeMiller_header[i] = mainMiller.lists[i].index
-			print(_list[i])
+			// print(_list[i])
 		}
 		return _list
 	}

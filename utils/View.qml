@@ -17,6 +17,12 @@ Item {
 	
 	width: 150
 	height: 500
+	Rectangle {
+		width: parent.width
+		height: parent.height
+	    color: "green"
+	    border.color: "black"
+	}
 
 	ColumnLayout {
 		id: ui
@@ -50,12 +56,6 @@ Item {
 				
 				delegate: Delegate {}
 				spacing: 0
-			}
-			Rectangle {
-				width: parent.width
-				height: parent.height
-			    color: "green"
-			    border.color: "gray"
 			}
 		}
 	}
