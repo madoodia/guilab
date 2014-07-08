@@ -63,8 +63,10 @@ Item {
 	function createList() {
 		var _list = []
 		for(var i=0;i < mainMiller.lists.length;i++){
-			_list[i] = mainMiller.lists[i].name
-			activeList_index[i] = mainMiller.lists[i].index
+			for(var j=0;j < mainMiller.lists[i].delegates.length;j++){
+				_list[j] = mainMiller.lists[i].delegates[j].name
+				activeList_index[j] = mainMiller.lists[i].delegates[j].index
+			}
 		}
 		return _list
 	}

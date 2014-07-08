@@ -132,7 +132,6 @@ class Miller(QtCore.QObject):
         _list.populate()
         _list._header = label
         self._lists.append(_list)
-        print self._lists
 
     def set_model(self, model):
         self.model = model
