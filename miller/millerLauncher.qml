@@ -11,6 +11,6 @@ ApplicationWindow {
 	flags: Qt.FramelessWindowHint | Qt.Window
 	color: "transparent"
 
-	// MillerColumn {}
+	// MillerView {}
 	TestMiller {}
 }

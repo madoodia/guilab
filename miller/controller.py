@@ -54,6 +54,7 @@ class List(QtCore.QObject):
         # Private members
         self._delegates = []
         self._header = ''
+        self._indexes = dict()
 
     @QtCore.pyqtProperty(QtQml.QQmlListProperty)
     def delegates(self):
@@ -68,7 +69,7 @@ class List(QtCore.QObject):
         self._header = header
 
     def populate(self, index=None):
-        self._delegates = []
+        # self._delegates = []
         index = index or self.index
 
         for model_item in self.model.children(index=index):
@@ -81,6 +82,7 @@ class List(QtCore.QObject):
                 _delegate.name = label
                 _delegate.index = index
                 self._delegates.append(_delegate)
+                self._indexes[index] = _delegate
 
     def set_model(self, model):
         self.model = model
@@ -113,17 +115,19 @@ class Miller(QtCore.QObject):
     def __init__(self, index=None, parent=None):
         super(Miller, self).__init__(parent)
         self.index = index
+        # self.light = 0
         self.model = None
 
         # Private members
         self._lists = []
+        self._indexes = dict()
 
     @QtCore.pyqtProperty(QtQml.QQmlListProperty)
     def lists(self):
         return QtQml.QQmlListProperty(List, self, self._lists)
 
     def add_list(self, index=None):
-        self._lists = []
+        # self._lists = []
         index = index or self.index
         label = self.model.data(index, 'display')
 
@@ -131,7 +135,14 @@ class Miller(QtCore.QObject):
         _list.set_model(self.model)
         _list.populate()
         _list._header = label
+        # if .meta is in folder:
+        #     self.light = 1
         self._lists.append(_list)
+        self._indexes[index] = _list
+
+        # print self._indexes
+        # print self._lists
+        # print _list._delegates
 
     def set_model(self, model):
         self.model = model
@@ -156,8 +167,14 @@ class Miller(QtCore.QObject):
         self.add_list(index)
 
     @QtCore.pyqtSlot(str)
-    def printMe(self, msg):
-        print msg
+    def send_index(self, index):
+        for i1, list_ in self._indexes.items():
+            for i2, delegate_ in list_._indexes.items():
+                if i2 == index:
+                    list_depth = self._lists.index(list_)
+                    self._lists[list_depth+1:] = []
+                    self.add_list(index)
+                    return
 
 
 def main(qml_file="millerLauncher.qml", path=""):

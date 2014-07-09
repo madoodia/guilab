@@ -3,72 +3,71 @@ import QtQuick.Layouts 1.1
 
 
 Item {
-	id: listViewRoot
+    id: listViewRoot
 
-	property var activeList_name: []
-	property var activeList_index: []
-	// property var activeList_depth: []
+    property var delegate_name: []
+    property var delegate_index: []
+    // property var activeList_depth: []
 
-	property int depthLevel: 0
+    property int depthLevel: 0
 
-	property var headerTxt: 'Header'
-	property int light: 0
-	// property int maxTextWidth: 0
-	
-	width: 150
-	height: 500
-	Rectangle {
-		width: parent.width
-		height: parent.height
-	    color: "green"
-	    border.color: "black"
-	}
+    property var headerTxt: 'Header'
+    property int light: 0
+    // property int maxTextWidth: 0
+    
+    width: 150
+    height: 500
 
-	ColumnLayout {
-		id: ui
-		width: parent.width
-		height: parent.height
-		spacing: 0
-		Layout.alignment: Qt.AlignHCenter
-		RowLayout {
-			// Layout.alignment: Qt.AlignHCenter
-			width: parent.width
-			height: 20
-			MillerHeader {
-				id: ourHeader
-				label: modelData
-				enableLight: light
-				// width: parent.width
-			}		
-		}
-		RowLayout {
-			Layout.alignment: Qt.AlignHCenter
-			ListView {
-				id: listView
-				anchors.fill: parent
-				clip: true
+    ColumnLayout {
+        id: ui
+        width: parent.width
+        height: parent.height
+        spacing: 0
+        Layout.alignment: Qt.AlignHCenter
+        RowLayout {
+            // Layout.alignment: Qt.AlignHCenter
+            width: parent.width
+            height: 20
+            MillerHeader {
+                id: ourHeader
+                label: modelData
+                enableLight: light
+                // width: parent.width
+            }       
+        }
+        RowLayout {
+            Layout.alignment: Qt.AlignHCenter
+            ListView {
+                id: listView
+                anchors.fill: parent
+                clip: true
 
-				Component.onCompleted: {
-					activeList_name = createList()
-				}
+                Component.onCompleted: {
+                    delegate_name = updateList()
+                }
 
-				model: activeList_name
-				
-				delegate: Delegate {}
-				spacing: 0
-			}
-		}
-	}
+                model: delegate_name
+                
+                delegate: Delegate {}
+                spacing: 0
 
-	function createList() {
-		var _list = []
-		for(var i=0;i < mainMiller.lists.length;i++){
-			for(var j=0;j < mainMiller.lists[i].delegates.length;j++){
-				_list[j] = mainMiller.lists[i].delegates[j].name
-				activeList_index[j] = mainMiller.lists[i].delegates[j].index
-			}
-		}
-		return _list
-	}
+                // populate: Transition {
+                //     NumberAnimation { properties: "y"; duration: 100 }
+                // }
+            }
+        }
+    }
+
+    function updateList() {
+        var _list = []
+        for(var i=0;i < mainMiller.lists.length;i++){
+            for(var j=0;j < mainMiller.lists[i].delegates.length;j++){
+                _list[j] = mainMiller.lists[i].delegates[j].name
+                delegate_index[j] = mainMiller.lists[i].delegates[j].index
+                print(delegate_index[j] + " : " + _list[j])
+            }
+        }
+        return _list
+    }
 
 }
