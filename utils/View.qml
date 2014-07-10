@@ -60,12 +60,10 @@ Item {
 
     function updateList() {
         var _list = []
-        for(var i=0;i < mainMiller.lists.length;i++){
-            for(var j=0;j < mainMiller.lists[i].delegates.length;j++){
-                _list[j] = mainMiller.lists[i].delegates[j].name
-                delegate_index[j] = mainMiller.lists[i].delegates[j].index
-                print(delegate_index[j] + " : " + _list[j])
-            }
+        for(var j=0;j < mainMiller.lists[index].delegates.length;j++){
+            _list[j] = mainMiller.lists[index].delegates[j].name
+            delegate_index[j] = mainMiller.lists[index].delegates[j].index
+            // print(delegate_index[j] + " : " + _list[j])
         }
         return _list
     }

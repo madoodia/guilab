@@ -12,5 +12,5 @@ ApplicationWindow {
 	color: "transparent"
 
 	// MillerView {}
-	TestMiller {}
+	MillerView {}
 }

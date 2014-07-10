@@ -10,7 +10,7 @@ import "../miller"
 
 ApplicationWindow {
 	id: root
-	width: 400
+	width: 700
 	height: 400
 	title: "Miller Column"
 	flags: Qt.FramelessWindowHint | Qt.Window
@@ -113,10 +113,10 @@ ApplicationWindow {
 					Layout.maximumHeight: parent.height-30
 					Layout.alignment: Qt.AlignHCenter | Qt.AlignHCenter
 					spacing: 0
-					MillerColumn {
+					MillerView {
 						id: m
 						width: page.width
-						height: page.height-1
+						height: page.height
 					}
 				}
 			}

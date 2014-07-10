@@ -68,6 +68,14 @@ class List(QtCore.QObject):
     def header(self, header):
         self._header = header
 
+    @QtCore.pyqtProperty(str)
+    def index(self):
+        return self._index
+
+    @index.setter
+    def index(self, index):
+        self._index = index
+
     def populate(self, index=None):
         # self._delegates = []
         index = index or self.index
