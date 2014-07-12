@@ -18,7 +18,7 @@ Item {
 			// anchors.left: parent.left
 			anchors.centerIn: parent
 			// anchors.margins: 5
-			text: 'Hello World'
+			text: 'Header Here'
 			color: '#fefefe'
 		}
 		Rectangle {

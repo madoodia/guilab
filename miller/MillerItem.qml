@@ -1,6 +1,7 @@
 import QtQuick 2.0
 
-import Miller 1.0
+// import Miller 1.0
+import Controller 1.0
 
 import "../utils"
 
@@ -18,7 +19,7 @@ Item {
         height: parent.height-15
 
         ListView {
-            id: listView
+            id: millerView
             anchors.centerIn: parent
             width: parent.width-1
             height: parent.height-2
@@ -31,11 +32,21 @@ Item {
 
             model: list_header
             
-            delegate: View {}
+            delegate: ListItem {}
             spacing: 0
 
+            snapMode: ListView.SnapOneItem
+
+            focus: true
+            highlightFollowsCurrentItem: true
+
+            // populate: Transition {
+            //     NumberAnimation { properties: "x"; duration: 1000 }
+            // }
+
+
             // add: Transition {
-            //     NumberAnimation { properties: "x"; from: 0; duration: 1000 }
+            //     NumberAnimation { properties: "x"; duration: 1000 }
             // }
             // remove: Transition {
             //     ParallelAnimation {
@@ -47,19 +58,32 @@ Item {
     }
 
 
-    Miller {
-        id: mainMiller
+    // Miller {
+    //     id: mainController
+    //     Component.onCompleted: {
+    //         init()
+    //         list_header = updateMiller()
+    //     }
+    // }
+
+    Controller {
+        id: mainController
         Component.onCompleted: {
-            init()
             list_header = updateMiller()
         }
     }
 
+    function printMe() {
+        for(var i=0;i < mainController.lists.length;i++){
+            print(mainController.lists[i])
+        }        
+    }
+
     function updateMiller() {
         var _list = []
-        for(var i=0;i < mainMiller.lists.length;i++){
-            _list[i] = mainMiller.lists[i].header
-            list_index[i] = mainMiller.lists[i].index
+        for(var i=0;i < mainController.lists.length;i++){
+            _list[i] = mainController.lists[i].header
+            list_index[i] = mainController.lists[i].index
             // print(list_index[i])
         }
         // print("------------")

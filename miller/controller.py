@@ -13,7 +13,6 @@ class Delegate(QtCore.QObject):
         super(Delegate, self).__init__(parent)
         self._index = ''
         self._name = ''
-        # self._depth = 0
 
     @QtCore.pyqtProperty(str)
     def index(self):
@@ -31,13 +30,12 @@ class Delegate(QtCore.QObject):
     def name(self, name):
         self._name = name
 
-    # @QtCore.pyqtProperty(str)
-    # def depth(self):
-    #     return self._depth
+    @QtCore.pyqtSlot(str)
+    def selected_event(self, index):
+        print '(Delegate Class\'s method) Index : ', index
 
-    # @depth.setter
-    # def depth(self, depth):
-    #     self._depth = depth
+    def printMe(self):
+        print "I'm Here"
 
     def __repr__(self):
         return self._name
@@ -101,18 +99,18 @@ class List(QtCore.QObject):
             self.index = self.model.root_item.index
         self.populate()
 
-    @QtCore.pyqtSlot()
-    def init(self):
-        # root = os.path.abspath("E:\Madoodia\_Abstract_Factory")
-        model = dash.model.Model()
-        basename = os.path.basename(List._root)
-        self._header = basename
+    # @QtCore.pyqtSlot()
+    # def init(self):
+    #     # root = os.path.abspath("E:\Madoodia\_Abstract_Factory")
+    #     model = dash.model.Model()
+    #     basename = os.path.basename(List._root)
+    #     self._header = basename
 
-        model.setup(List._root)
-        self.set_model(model)
+    #     model.setup(List._root)
+    #     self.set_model(model)
 
-        index = model.root_item.index
-        self.populate(index)
+    #     index = model.root_item.index
+    #     self.populate(index)
 
     def __repr__(self):
         return self._header
@@ -130,9 +128,9 @@ class Miller(QtCore.QObject):
         self._lists = []
         self._indexes = dict()
 
-    @QtCore.pyqtProperty(QtQml.QQmlListProperty)
-    def lists(self):
-        return QtQml.QQmlListProperty(List, self, self._lists)
+    # @QtCore.pyqtProperty(QtQml.QQmlListProperty)
+    # def lists(self):
+    #     return QtQml.QQmlListProperty(List, self, self._lists)
 
     def add_list(self, index=None):
         # self._lists = []
@@ -161,21 +159,21 @@ class Miller(QtCore.QObject):
             self.index = self.model.root_item.index
         self.add_list()
 
-    @QtCore.pyqtSlot()
-    def init(self):
-        # root = os.path.abspath("E:\Madoodia\_Abstract_Factory")
-        model = dash.model.Model()
-        # basename = os.path.basename(List._root)
-        # self._header = basename
+    # @QtCore.pyqtSlot()
+    # def init(self):
+    #     # root = os.path.abspath("E:\Madoodia\_Abstract_Factory")
+    #     model = dash.model.Model()
+    #     # basename = os.path.basename(List._root)
+    #     # self._header = basename
 
-        model.setup(List._root)
-        self.set_model(model)
+    #     model.setup(List._root)
+    #     self.set_model(model)
 
-        index = model.root_item.index
-        self.add_list(index)
+    #     index = model.root_item.index
+    #     self.add_list(index)
 
-    @QtCore.pyqtSlot(str)
-    def send_index(self, index):
+    # @QtCore.pyqtSlot(str)
+    def click_event(self, index):
         for i1, list_ in self._indexes.items():
             for i2, delegate_ in list_._indexes.items():
                 if i2 == index:
@@ -185,13 +183,42 @@ class Miller(QtCore.QObject):
                     return
 
 
+class Controller(QtCore.QObject):
+    _path = '../fixtures/root_withcquery'
+    _root = os.path.abspath(_path)
+
+    def __init__(self, parent=None):
+        super(Controller, self).__init__(parent)
+        self._lists = []
+
+        miller = Miller()
+        model = dash.model.Model()
+        model.setup(self._root)
+        miller.set_model(model)
+        index = model.root_item.index
+        miller.add_list(index)
+
+        self._lists = miller._lists
+
+    @QtCore.pyqtProperty(QtQml.QQmlListProperty)
+    def lists(self):
+        return QtQml.QQmlListProperty(str, self, self._lists)
+
+    # @QtCore.pyqtSlot(str)
+    # def selected_event(self, index):
+    #     print index
+
+
 def main(qml_file="millerLauncher.qml", path=""):
-    List._root = os.path.abspath(path)
+    # _root = os.path.abspath(path)
+    # List._root = os.path.abspath(path)
     # Show QML Window
     full_directory = os.path.dirname(os.path.abspath(__file__))
     app = QtWidgets.QApplication(sys.argv)
-    QtQml.qmlRegisterType(List, 'List', 1, 0, 'List')
-    QtQml.qmlRegisterType(Miller, 'Miller', 1, 0, 'Miller')
+    # QtQml.qmlRegisterType(Delegate, 'Delegate', 1, 0, 'Delegate')
+    # QtQml.qmlRegisterType(List, 'List', 1, 0, 'List')
+    # QtQml.qmlRegisterType(Miller, 'Miller', 1, 0, 'Miller')
+    QtQml.qmlRegisterType(Controller, 'Controller', 1, 0, 'Controller')
     engine = QtQml.QQmlApplicationEngine()
     qml_file = os.path.join(full_directory, qml_file)
     engine.load(str(qml_file))
@@ -201,4 +228,5 @@ def main(qml_file="millerLauncher.qml", path=""):
     sys.exit(app.exec_())
 
 if __name__ == '__main__':
-    main(path='../fixtures/root_withcquery')
+    # main(path='../fixtures/root_withcquery')
+    main()

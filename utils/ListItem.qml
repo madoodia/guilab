@@ -13,6 +13,7 @@ Item {
 
     property var headerTxt: 'Header'
     property int light: 0
+    property int pIndex
     // property int maxTextWidth: 0
     
     width: 150
@@ -44,15 +45,28 @@ Item {
 
                 Component.onCompleted: {
                     delegate_name = updateList()
+                    pIndex = index
                 }
 
                 model: delegate_name
                 
-                delegate: Delegate {}
+                delegate: DelegateItem {
+                    parentIndex: pIndex
+                }
                 spacing: 0
 
                 // populate: Transition {
                 //     NumberAnimation { properties: "y"; duration: 100 }
+                // }
+                
+                // add: Transition {
+                //     NumberAnimation { properties: "x"; duration: 1000 }
+                // }
+                // remove: Transition {
+                //     ParallelAnimation {
+                //         NumberAnimation { property: "opacity"; to: 0; duration: 1000 }
+                //         NumberAnimation { properties: "x,y"; to: 100; duration: 1000 }
+                //     }
                 // }
             }
         }
@@ -60,9 +74,9 @@ Item {
 
     function updateList() {
         var _list = []
-        for(var j=0;j < mainMiller.lists[index].delegates.length;j++){
-            _list[j] = mainMiller.lists[index].delegates[j].name
-            delegate_index[j] = mainMiller.lists[index].delegates[j].index
+        for(var j=0;j < mainController.lists[index].delegates.length;j++){
+            _list[j] = mainController.lists[index].delegates[j].name
+            delegate_index[j] = mainController.lists[index].delegates[j].index
             // print(delegate_index[j] + " : " + _list[j])
         }
         return _list

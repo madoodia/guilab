@@ -11,6 +11,7 @@ Item {
     // property string label: 'Hello World!'
     property bool mainEnabled: true
     property int textWidth: 0
+    property int parentIndex
     width: ourHeader.width
     height: 25
     enabled: mainEnabled
@@ -69,8 +70,9 @@ Item {
                 buttonColor = "#537f3f"
             }
             onClicked: {
-                mainMiller.send_index(delegate_index[index])
-                root.list_header = root.updateMiller()
+                // print(parentIndex + " : " + index)
+                mainController.lists[parentIndex].delegates[index].selected_event(delegate_index[index])
+                // root.list_header = root.updateMiller()
             }
         }
     }
