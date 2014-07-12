@@ -31,6 +31,8 @@ Item {
         onExited: {
             rect.opacity = 0
         }
-        onClicked: {}
+        onClicked: {
+            print("NoApp")
+        }
     }
 }

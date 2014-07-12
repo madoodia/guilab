@@ -5,6 +5,8 @@ from PyQt5 import QtCore
 from PyQt5 import QtWidgets
 from PyQt5 import QtQml
 
+import pigui.pyqt5.widget
+import pigui.pyqt5.event
 import dash.model
 
 
@@ -32,7 +34,11 @@ class Delegate(QtCore.QObject):
 
     @QtCore.pyqtSlot(str)
     def selected_event(self, index):
-        print '(Delegate Class\'s method) Index : ', index
+        # print '(Delegate Class\'s method) Index : ', index
+
+        state = pigui.pyqt5.event.SelectedEvent.SelectedState
+        event = pigui.pyqt5.event.SelectedEvent(state=state, index=index)
+        QtWidgets.QApplication.postEvent(self, event)
 
     @QtCore.pyqtSlot()
     def here_in_delegate(self):
@@ -138,6 +144,13 @@ class Miller(QtCore.QObject):
     #     return QtQml.QQmlListProperty(List, self, self._lists)
 
     def add_list(self, index=None):
+
+        for i1, list_ in self._indexes.items():
+            for i2, delegate_ in list_._indexes.items():
+                if i2 == index:
+                    list_depth = self._lists.index(list_)
+                    self._lists[list_depth+1:] = []
+
         # self._lists = []
         index = index or self.index
         label = self.model.data(index, 'display')
@@ -150,10 +163,27 @@ class Miller(QtCore.QObject):
         #     self.light = 1
         self._lists.append(_list)
         self._indexes[index] = _list
+        print self._lists
 
         # print self._indexes
         # print self._lists
         # print _list._delegates
+
+        event = pigui.pyqt5.event.ArrangeEvent()
+        QtWidgets.QApplication.postEvent(self, event)
+
+        return None
+
+    def event(self, event):
+        if event.type() == pigui.pyqt5.event.Type.SelectedEvent:
+
+            if event.state == event.SelectedState:
+                self.add_list(index=event.index)
+
+            elif event.state == event.DeselectedState:
+                self.remove_list(event.index)
+
+        return super(Miller, self).event(event)
 
     def set_model(self, model):
         self.model = model
@@ -224,10 +254,9 @@ def main(qml_file="millerLauncher.qml", path=""):
 
     # Show QML Window
     full_directory = os.path.dirname(os.path.abspath(__file__))
-    app = QtWidgets.QApplication(sys.argv)
-    # QtQml.qmlRegisterType(Delegate, 'Delegate', 1, 0, 'Delegate')
-    # QtQml.qmlRegisterType(List, 'List', 1, 0, 'List')
-    # QtQml.qmlRegisterType(Miller, 'Miller', 1, 0, 'Miller')
+
+    app = pigui.pyqt5.widget.QApplication(sys.argv)
+    # app = QtWidgets.QApplication(sys.argv)
 
     QtQml.qmlRegisterType(Controller, 'Controller', 1, 0, 'Controller')
     engine = QtQml.QQmlApplicationEngine()

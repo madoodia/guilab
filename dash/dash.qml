@@ -71,6 +71,7 @@ ApplicationWindow {
 						// anchors.bottom: parent.bottom
 						anchors.margins: 7
 						color: 'white'
+                    	font.family: 'Consolas'
 
 					}
 					ColumnLayout {
