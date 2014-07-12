@@ -89,7 +89,7 @@ class List(QtCore.QObject):
             index = model_item.index
             label = self.model.data(index, 'display')
 
-            _delegate = Delegate()
+            _delegate = Delegate(parent=self)
             # self._header = label
             if self.model.data(index, 'group'):
                 _delegate.name = label
@@ -155,7 +155,7 @@ class Miller(QtCore.QObject):
         index = index or self.index
         label = self.model.data(index, 'display')
 
-        _list = List(index)
+        _list = List(index, parent=self)
         _list.set_model(self.model)
         _list.populate()
         _list._header = label
@@ -178,6 +178,7 @@ class Miller(QtCore.QObject):
         if event.type() == pigui.pyqt5.event.Type.SelectedEvent:
 
             if event.state == event.SelectedState:
+                print "Adding list"
                 self.add_list(index=event.index)
 
             elif event.state == event.DeselectedState:
