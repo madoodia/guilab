@@ -37,6 +37,7 @@ Item {
                     anchors.leftMargin: 5
                     text: modelData
                     color: '#fefefe'
+                    font.family: 'Consolas'
                     Component.onCompleted: {
                         textWidth = width
                     }
@@ -72,6 +73,7 @@ Item {
             onClicked: {
                 // print(parentIndex + " : " + index)
                 mainController.lists[parentIndex].delegates[index].selected_event(delegate_index[index])
+                // mainController.lists[parentIndex].delegates[index].here_in_delegate()
                 // root.list_header = root.updateMiller()
             }
         }

@@ -69,6 +69,7 @@ Item {
     Controller {
         id: mainController
         Component.onCompleted: {
+            // here_in_controller()
             list_header = updateMiller()
         }
     }

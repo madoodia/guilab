@@ -45,12 +45,14 @@ Item {
 
                 Component.onCompleted: {
                     delegate_name = updateList()
+                    // mainController.lists[index].here_in_list()
                     pIndex = index
                 }
 
                 model: delegate_name
                 
                 delegate: DelegateItem {
+                    id: deleg
                     parentIndex: pIndex
                 }
                 spacing: 0
@@ -68,6 +70,7 @@ Item {
                 //         NumberAnimation { properties: "x,y"; to: 100; duration: 1000 }
                 //     }
                 // }
+                footer: GhostItem {}
             }
         }
     }

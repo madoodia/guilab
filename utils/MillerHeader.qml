@@ -20,6 +20,7 @@ Item {
 			// anchors.margins: 5
 			text: 'Header Here'
 			color: '#fefefe'
+            font.family: 'Consolas'
 		}
 		Rectangle {
 			id: light

@@ -113,7 +113,7 @@ ApplicationWindow {
 					Layout.maximumHeight: parent.height-30
 					Layout.alignment: Qt.AlignHCenter | Qt.AlignHCenter
 					spacing: 0
-					MillerView {
+					MillerItem {
 						id: m
 						width: page.width
 						height: page.height

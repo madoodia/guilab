@@ -34,15 +34,16 @@ class Delegate(QtCore.QObject):
     def selected_event(self, index):
         print '(Delegate Class\'s method) Index : ', index
 
-    def printMe(self):
-        print "I'm Here"
+    @QtCore.pyqtSlot()
+    def here_in_delegate(self):
+        print 'Here is Delegate class\'s method'
 
     def __repr__(self):
         return self._name
 
 
 class List(QtCore.QObject):
-    _root = ''
+    # _root = ''
 
     def __init__(self, index=None, parent=None):
         super(List, self).__init__(parent)
@@ -111,6 +112,10 @@ class List(QtCore.QObject):
 
     #     index = model.root_item.index
     #     self.populate(index)
+
+    @QtCore.pyqtSlot()
+    def here_in_list(self):
+        print 'Here is List class\'s method'
 
     def __repr__(self):
         return self._header
@@ -182,6 +187,10 @@ class Miller(QtCore.QObject):
                     self.add_list(index)
                     return
 
+    # @QtCore.pyqtSlot()
+    def here_in_miller(self):
+        print 'Here is Miller class\'s method'
+
 
 class Controller(QtCore.QObject):
     _path = '../fixtures/root_withcquery'
@@ -191,38 +200,39 @@ class Controller(QtCore.QObject):
         super(Controller, self).__init__(parent)
         self._lists = []
 
-        miller = Miller()
+        self.miller = Miller()
         model = dash.model.Model()
         model.setup(self._root)
-        miller.set_model(model)
+        self.miller.set_model(model)
         index = model.root_item.index
-        miller.add_list(index)
+        self.miller.add_list(index)
 
-        self._lists = miller._lists
+        self._lists = self.miller._lists
 
     @QtCore.pyqtProperty(QtQml.QQmlListProperty)
     def lists(self):
         return QtQml.QQmlListProperty(str, self, self._lists)
 
-    # @QtCore.pyqtSlot(str)
-    # def selected_event(self, index):
-    #     print index
+    @QtCore.pyqtSlot()
+    def here_in_controller(self):
+        self.miller.here_in_miller()
 
 
 def main(qml_file="millerLauncher.qml", path=""):
     # _root = os.path.abspath(path)
     # List._root = os.path.abspath(path)
+
     # Show QML Window
     full_directory = os.path.dirname(os.path.abspath(__file__))
     app = QtWidgets.QApplication(sys.argv)
     # QtQml.qmlRegisterType(Delegate, 'Delegate', 1, 0, 'Delegate')
     # QtQml.qmlRegisterType(List, 'List', 1, 0, 'List')
     # QtQml.qmlRegisterType(Miller, 'Miller', 1, 0, 'Miller')
+
     QtQml.qmlRegisterType(Controller, 'Controller', 1, 0, 'Controller')
     engine = QtQml.QQmlApplicationEngine()
     qml_file = os.path.join(full_directory, qml_file)
     engine.load(str(qml_file))
-
     window = engine.rootObjects()[0]
     window.show()
     sys.exit(app.exec_())
