@@ -5,8 +5,8 @@ import QtQuick.Layouts 1.1
 
 ApplicationWindow {
 	id: root
-	width: 605
-	height: 500
+	width: 600
+	height: 300
 	title: "Miller Column"
 	flags: Qt.FramelessWindowHint | Qt.Window
 	color: "transparent"

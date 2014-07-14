@@ -10,7 +10,7 @@ Item {
     width: 600
     height: 300
     property var list_header: []
-    property var list_index: []
+    property var list_objects: []
 
     InnerBevelFrame {
         id: mainBG
@@ -36,9 +36,6 @@ Item {
             spacing: 0
 
             snapMode: ListView.SnapOneItem
-
-            focus: true
-            highlightFollowsCurrentItem: true
 
             // populate: Transition {
             //     NumberAnimation { properties: "x"; duration: 1000 }
@@ -74,17 +71,11 @@ Item {
         }
     }
 
-    function printMe() {
-        for(var i=0;i < mainController.lists.length;i++){
-            print(mainController.lists[i])
-        }        
-    }
-
     function updateMiller() {
         var _list = []
         for(var i=0;i < mainController.lists.length;i++){
-            _list[i] = mainController.lists[i].header
-            list_index[i] = mainController.lists[i].index
+            list_objects[i] = mainController.lists[i]
+            _list[i] = list_objects[i].header
             // print(list_index[i])
         }
         // print("------------")

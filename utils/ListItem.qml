@@ -6,8 +6,7 @@ Item {
     id: listViewRoot
 
     property var delegate_name: []
-    property var delegate_index: []
-    // property var activeList_depth: []
+    property var delegate_objetcs: []
 
     property int depthLevel: 0
 
@@ -52,7 +51,6 @@ Item {
                 model: delegate_name
                 
                 delegate: DelegateItem {
-                    id: deleg
                     parentIndex: pIndex
                 }
                 spacing: 0
@@ -78,8 +76,8 @@ Item {
     function updateList() {
         var _list = []
         for(var j=0;j < mainController.lists[index].delegates.length;j++){
-            _list[j] = mainController.lists[index].delegates[j].name
-            delegate_index[j] = mainController.lists[index].delegates[j].index
+            delegate_objetcs[j] = mainController.lists[index].delegates[j]
+            _list[j] = delegate_objetcs[j].name
             // print(delegate_index[j] + " : " + _list[j])
         }
         return _list

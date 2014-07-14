@@ -96,6 +96,7 @@ class List(QtCore.QObject):
                 _delegate.index = index
                 self._delegates.append(_delegate)
                 self._indexes[index] = _delegate
+        # print self._delegates
 
     def set_model(self, model):
         self.model = model
@@ -163,7 +164,7 @@ class Miller(QtCore.QObject):
         #     self.light = 1
         self._lists.append(_list)
         self._indexes[index] = _list
-        print self._lists
+        # print self._lists
 
         # print self._indexes
         # print self._lists
@@ -178,7 +179,7 @@ class Miller(QtCore.QObject):
         if event.type() == pigui.pyqt5.event.Type.SelectedEvent:
 
             if event.state == event.SelectedState:
-                print "Adding list"
+                # print "Adding list"
                 self.add_list(index=event.index)
 
             elif event.state == event.DeselectedState:
@@ -230,6 +231,7 @@ class Controller(QtCore.QObject):
     def __init__(self, parent=None):
         super(Controller, self).__init__(parent)
         self._lists = []
+        self._delegates = []
 
         self.miller = Miller()
         model = dash.model.Model()
@@ -247,6 +249,14 @@ class Controller(QtCore.QObject):
     @QtCore.pyqtSlot()
     def here_in_controller(self):
         self.miller.here_in_miller()
+
+    @QtCore.pyqtSlot()
+    def printLists(self):
+        print self._lists
+        self._delegates = []
+        for each_list in self._lists:
+            self._delegates.append(each_list._delegates)
+        print self._delegates
 
 
 def main(qml_file="millerLauncher.qml", path=""):
